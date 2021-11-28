@@ -101,13 +101,13 @@ contract BuildCollective is Ownable {
   }
 
   // Fonction permettant d'ajouter un nouveau membre a l'entreprise
-  function addMember(address addressNewMember) public userRegistred(addressNewMember) EntrepriseCreated(msg.sender) returns (bool) {
+  function addContributor(address addressNewMember) public userRegistred(addressNewMember) EntrepriseCreated(msg.sender) returns (bool) {
     entreprises[msg.sender].members.push(addressNewMember);
     return true;
   }
 
   // Fonction permettant d'augmenter la balance de l'entreprise
-  function addBalanceEntreprise(uint256 amount, address addressEntreprise) public EntrepriseCreated(addressEntreprise) balanceNotNegative(amount) returns (bool) {
+  function addBalanceProject(uint256 amount, address addressEntreprise) public EntrepriseCreated(addressEntreprise) balanceNotNegative(amount) returns (bool) {
     entreprises[addressEntreprise].balance += amount;
     return true;
   }
