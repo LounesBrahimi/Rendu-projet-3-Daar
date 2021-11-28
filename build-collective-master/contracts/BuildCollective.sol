@@ -101,13 +101,13 @@ contract BuildCollective is Ownable {
   }
 
   // Fonction permettant d'ajouter un nouveau membre a l'entreprise
-  function addContributor(address addressNewMember) public userRegistred(addressNewMember) EntrepriseCreated(msg.sender) returns (bool) {
+  function addMember(address addressNewMember) public userRegistred(addressNewMember) EntrepriseCreated(msg.sender) returns (bool) {
     entreprises[msg.sender].members.push(addressNewMember);
     return true;
   }
 
   // Fonction permettant d'augmenter la balance de l'entreprise
-  function addBalanceProject(uint256 amount, address addressEntreprise) public EntrepriseCreated(addressEntreprise) balanceNotNegative(amount) returns (bool) {
+  function addBalanceEntreprise(uint256 amount, address addressEntreprise) public EntrepriseCreated(addressEntreprise) balanceNotNegative(amount) returns (bool) {
     entreprises[addressEntreprise].balance += amount;
     return true;
   }
@@ -173,14 +173,14 @@ contract BuildCollective is Ownable {
   }
 
   // Fonction permettant d'ajouter un nouveau contributeur au projet
-  function addMember(string memory _nameProject, address ownerAddress ,address addressNewContributor) public userRegistred(addressNewContributor) userRegistred(ownerAddress) isProjectCreated(ownerAddress) userNameNotEmpty(_nameProject)  returns (bool) {
+  function addContributor(string memory _nameProject, address ownerAddress ,address addressNewContributor) public userRegistred(addressNewContributor) userRegistred(ownerAddress) isProjectCreated(ownerAddress) userNameNotEmpty(_nameProject)  returns (bool) {
     require(keccak256(abi.encodePacked(_nameProject, ownerAddress)) == projects[ownerAddress].id);
     projects[ownerAddress].contributors.push(addressNewContributor);
     return true;
   }
 
   // Fonction permettant d'augmenter la balance d'un projet
-  function addBalanceEntreprise(string memory _nameProject, address ownerAddress, uint256 amount) public userRegistred(ownerAddress) isProjectCreated(ownerAddress) userNameNotEmpty(_nameProject) balanceNotNegative(amount) returns (bool) {
+  function addBalanceProject(string memory _nameProject, address ownerAddress, uint256 amount) public userRegistred(ownerAddress) isProjectCreated(ownerAddress) userNameNotEmpty(_nameProject) balanceNotNegative(amount) returns (bool) {
     require(keccak256(abi.encodePacked(_nameProject, ownerAddress)) == projects[ownerAddress].id);
     projects[ownerAddress].balance += amount;
     return true;
